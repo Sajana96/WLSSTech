@@ -12,7 +12,7 @@ namespace API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -42,8 +42,11 @@ namespace API
             var jwtKey = jwtSection["Key"];
             var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -57,6 +60,7 @@ namespace API
                         ClockSkew = TimeSpan.FromMinutes(1)
                     };
                 });
+
             builder.Services.AddAuthorization();
 
             var app = builder.Build();
@@ -75,7 +79,7 @@ namespace API
             {
                 var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
 
-                logger.LogInformation($"HTTP {context.Request.Method} {context.Request.Path}");
+                logger.LogInformation($"Hitting HTTP {context.Request.Method} {context.Request.Path}");
 
                 await next();
 
@@ -87,6 +91,8 @@ namespace API
 
 
             app.MapControllers();
+
+            //await SeedRolesData.SeedRolesAndAdminAsync(app.Services);
 
             app.Run();
         }

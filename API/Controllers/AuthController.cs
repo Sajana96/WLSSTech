@@ -2,6 +2,7 @@
 using API.Utility;
 using Azure.Core;
 using Common.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -9,7 +10,7 @@ using System.Net;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("auth")]
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -52,6 +53,7 @@ namespace API.Controllers
                 return  StatusCode(500, new ApiResponse() { IsSuccess = false, Message = ex.Message, HttpStatusCode = (int)HttpStatusCode.InternalServerError});
             }
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser ([FromBody] LoginRequest loginRequest)
