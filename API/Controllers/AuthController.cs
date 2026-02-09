@@ -54,7 +54,6 @@ namespace API.Controllers
             }
         }
 
-
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser ([FromBody] LoginRequest loginRequest)
         {

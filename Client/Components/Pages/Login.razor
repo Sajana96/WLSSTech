@@ -1,0 +1,32 @@
+﻿@page "/"
+@using Client.Components.Layout
+@rendermode InteractiveServer
+@layout AuthLayout
+
+
+<h3>Login</h3>
+
+    <EditForm Model="_model" OnValidSubmit="@HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div style="max-width: 420px;">
+            <div class="mb-3">
+                <label>Email</label>
+                <InputText class="form-control" @bind-Value="_model.Email" />
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <InputText class="form-control" type="password" @bind-Value="_model.Password" />
+            </div>
+
+            <button class="btn btn-primary" disabled="@_busy">Login</button>
+
+            @if (!string.IsNullOrWhiteSpace(_error))
+            {
+                <div class="alert alert-danger mt-3">@_error</div>
+            }
+        </div>
+    </EditForm>
+

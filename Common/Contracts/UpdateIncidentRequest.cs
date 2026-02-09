@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Common.Contracts
 {
-    public record UpdateIncidentRequest
-    (
-        string Title,
-    string? Description,
-    IncidentSeverity Severity,
-    IncidentStatus Status,     
-    string? Location
-    );
+    public class UpdateIncidentRequest
+    {
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public IncidentSeverity? Severity { get; set; }
+        public IncidentStatus? Status { get; set; }
+        public string? Location { get; set; }
+    }
 }

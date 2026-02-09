@@ -126,18 +126,27 @@ namespace API.Controllers
 
         // PUT api/incidents/{id}
         [HttpPut("{id:guid}")]
-        [Authorize(Roles = "Admin,Manager")]
+        [Authorize]
         public async Task<IActionResult> Update(Guid id, UpdateIncidentRequest request)
         {
             var incident = await _db.Incidents.FirstOrDefaultAsync(i => i.Id == id);
             if (incident is null)
                 return NotFound();
 
-            incident.Title = request.Title.Trim();
-            incident.Description = request.Description?.Trim();
-            incident.Severity = request.Severity;
-            incident.Status = request.Status;
-            incident.Location = request.Location?.Trim();
+            if(!string.IsNullOrEmpty(request.Title))
+                incident.Title = request.Title?.Trim();
+
+            if (!string.IsNullOrEmpty(request.Description))
+                incident.Description = request.Description?.Trim();
+
+            if (request.Severity.HasValue)
+                incident.Severity = request.Severity.Value;
+
+            if (request.Status.HasValue)
+                incident.Status = request.Status.Value;
+
+            if(!string.IsNullOrEmpty(request.Location))
+                incident.Location = request.Location?.Trim();
 
             await _db.SaveChangesAsync();
             return NoContent();
