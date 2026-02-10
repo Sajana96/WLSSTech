@@ -154,7 +154,7 @@ namespace API.Controllers
 
         // POST api/incidents/{id}/close
         [HttpPost("{id:guid}/close")]
-        [Authorize(Roles = "Admin,Manager")]
+        [Authorize]
         public async Task<IActionResult> Close(Guid id)
         {
             var incident = await _db.Incidents.FirstOrDefaultAsync(i => i.Id == id);

@@ -1,0 +1,43 @@
+﻿@page "/register"
+@using Client.Components.Layout
+@rendermode InteractiveServer
+
+@layout AuthLayout
+
+<h3>Create account</h3>
+
+<EditForm Model="_model" OnValidSubmit="@HandleRegister"  >
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Name</label>
+        <InputText class="form-control" @bind-Value="_model.Name" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <InputText class="form-control" @bind-Value="_model.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label>Password</label>
+        <InputText class="form-control" type="password" @bind-Value="_model.Password" />
+        <div class="form-text">Minimum 8 characters.</div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary" disabled="@_busy">Register</button>
+        <a class="btn btn-outline-secondary" href="/">Back to login</a>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(_success))
+    {
+        <div class="alert alert-success mt-3">@_success</div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(_error))
+    {
+        <div class="alert alert-danger mt-3">@_error</div>
+    }
+</EditForm>

@@ -92,7 +92,7 @@ namespace API
 
             app.MapControllers();
 
-            //await SeedRolesData.SeedRolesAndAdminAsync(app.Services);
+            await SeedRolesData.SeedRolesAndAdminAsync(app.Services);
 
             app.Run();
         }

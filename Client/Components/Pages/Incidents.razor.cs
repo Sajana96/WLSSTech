@@ -15,7 +15,7 @@ namespace Client.Components.Pages
         [Inject] public TokenStore? TokenStore { get; set; } = default!;
         [Inject] private AuthLocalStorage AuthLocalStorage { get; set; }
 
-        private readonly IncidentDto _create = new ();
+        private readonly IncidentDto _create = new() { Severity = IncidentSeverity.Low};
         private List<IncidentResponse> _incidents = new();
 
         private bool _loading = true;

@@ -1,7 +1,8 @@
 ﻿@page "/incidents"
+@using Client.AuthHandlers
 @using Common.Enums
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
-
+@inherits AuthGuard
 
 <h3>Incidents</h3>
 
@@ -26,9 +27,10 @@
             <div class="mb-2">
                 <label>Severity</label>
                 <InputSelect class="form-control" @bind-Value="_create.Severity">
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
+                    @foreach (var status in Enum.GetValues<IncidentSeverity>())
+                    {
+                        <option value="@status">@status</option>
+                    }
                 </InputSelect>
             </div>
 
